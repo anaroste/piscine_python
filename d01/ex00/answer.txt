@@ -1,0 +1,5 @@
+pip freeze
+pip freeze
+pip show numpy
+conda search tesseractpy
+pip freeze > requirements.txtf
