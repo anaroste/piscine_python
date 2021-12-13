@@ -11,9 +11,13 @@ def get_name(name):
 
 class Book:
     def __init__(self, name):
+        if not isinstance(name, str):
+            print("Book's name isn't a string")
+            exit()
         self.name = name
-        self.last_update = datetime.now()
-        self.creation_date = datetime.now()
+        now = datetime.now()
+        self.last_update = now
+        self.creation_date = now
         self.recipes_list = {
             'starter': [],
             'lunch': [],
@@ -38,6 +42,9 @@ class Book:
 
     def get_recipes_by_types(self, recipe_type):
         """Get all recipe names for a given recipe_type """
+        if ['starter', 'lunch', 'dessert'].count(recipe_type) == 0:
+            print('Recipe type non existing')
+            return None
         for elt in self.recipes_list[recipe_type]:
             print(elt)
         return self.recipes_list[recipe_type]

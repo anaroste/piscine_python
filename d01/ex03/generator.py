@@ -4,6 +4,9 @@ from random import randint
 def generator(text, sep=" ", option=None):
     '''Option is an optional arg, sep is mandatory'''
     opt = [None, 'shuffle', 'ordered', 'unique']
+    if option != None and not isinstance(option, str):
+        print('ERROR')
+        exit()
     if not isinstance(text, str) or opt.count(option) == 0:
         print('ERROR')
         exit()

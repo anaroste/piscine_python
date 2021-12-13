@@ -5,8 +5,7 @@ import os
 
 def log(func):
     def funct_log(*args, **kwargs):
-        userTab = os.path.expanduser('~').split('/')
-        user = userTab[len(userTab) - 1]
+        user = os.environ["USER"]
         funct_name = func.__name__
 
         start = time.time()

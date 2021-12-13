@@ -21,16 +21,16 @@ def define_arg(arg):
             exit()
     elif isinstance(arg, tuple):
         if len(arg) != 2 or not isinstance(arg[0], int) \
-           or not isinstance(arg[1], int):
+           or not isinstance(arg[1], int) or arg[0] >= arg[1]:
             print("Tuple incorrect")
             exit()
         for i in range(arg[0], arg[1]):
             tab.append([float(i)])
-    elif isinstance(arg, int):
+    elif isinstance(arg, int) and arg >= 0:
         for i in range(arg):
             tab.append([float(i)])
     else:
-        print("Type de l'argument non gere")
+        print("Type de l'argument non gere ou negatif")
         exit()
     if isinstance(tab[0], list):
         dim = (len(tab), len(tab[0]))
@@ -62,7 +62,7 @@ class Vector:
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
                     tab[i][j] = self.values[i][j] * other.values[i][j]
-            return tab
+            return Vector(tab)
         else:
             print("Les matrices n'ont pas la meme dimension")
             return None
@@ -75,14 +75,14 @@ class Vector:
         self.values = tab
 
     def __add__(self, other):
-        if other.shape == self.shape:
+        if isinstance(other, Vector) and other.shape == self.shape:
             tab = init_tab(self.shape)
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
                     tab[i][j] = self.values[i][j] + other.values[i][j]
-            return tab
+            return Vector(tab)
         else:
-            print("Les matrices n'ont pas la meme dimension")
+            print("Ce ne sont pas des matrices ou elles n'ont pas la meme dimension")
             return None
 
     __radd__ = __add__
@@ -93,7 +93,7 @@ class Vector:
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
                     tab[i][j] = self.values[i][j] - other.values[i][j]
-            return tab
+            return Vector(tab)
         else:
             print("Les matrices n'ont pas la meme dimension")
             return None
@@ -106,7 +106,7 @@ class Vector:
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
                     tab[i][j] = self.values[i][j] / oth
-            return tab
+            return Vector(tab)
         else:
             if oth == 0:
                 raise ValueError("A scalar cannot be divided by a Vector")
@@ -124,14 +124,15 @@ class Vector:
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
                     tab[i][j] = self.values[i][j] * other
-            return tab
+            return Vector(tab)
         else:
             print("Erreur, mul par autre chose qu'un int ou un float")
             return None
 
-    def __rmul__(self, other):
-        print("Erreur, impossible mul scalaraire par vecteur")
-        return None
+    __rmul__ = __mul__
+    # def __rmul__(self, other):
+    #     print("Erreur, impossible mul scalaraire par vecteur")
+    #     return None
 
     def __str__(self):
         return f"Dimension : {self.shape}\n{self.values}"
