@@ -1,4 +1,3 @@
-from ImageProcessor import ImageProcessor
 import numpy as np
 
 
@@ -52,7 +51,9 @@ class ScrapBooker:
         Raises:
         This function should not raise any Exception.
         '''
-        if not check_all_elt_type(array, list) or not check_all_elt_len(array):
+        if not isinstance(array, np.ndarray):
+            return None
+        if not check_all_elt_len(array):
             return None
         if not isshape(dim) and not isshape(position):
             return None
@@ -77,15 +78,15 @@ class ScrapBooker:
         if not isaxis(axis) or len(array) < n:
             return None
         ret = []
-        if axis == 0:
+        if axis == 1:
             for i in range(len(array)):
-                if i % 3 != 0:
+                if (i + 1) % n != 0:
                     ret.append(array[i])
         else:
             for elt in array:
                 tmp = []
                 for i in range(len(elt)):
-                    if (i + 1) % 3 != 0:
+                    if (i + 1) % n != 0:
                         tmp.append(elt[i])
                 ret.append(tmp)
         return np.array(ret)
@@ -103,17 +104,11 @@ class ScrapBooker:
         Raises:
         This function should not raise any Exception.
         '''
-        if not isaxis(axis) or len(array) < n:
+        if not isaxis(axis) or len(array) < n or n < 0:
             return None
-        ret = []
-        if axis == 0:
-            return np.array([array[i % n] for i in range(len(array) * n)])
-        else:
-            for elt in array:
-                tmp = elt
-                for i in range(n - 1):
-                    tmp = np.concatenate((tmp, elt))
-                ret.append(tmp)
+        ret = array
+        for i in range(n - 1):
+            ret = np.concatenate((ret, array), axis)
         return np.array(ret)
 
     def mosaic(self, array, dim):
@@ -129,7 +124,7 @@ class ScrapBooker:
         Raises:
         This function should not raise any Exception.
         '''
-        if not isshape(dim):
+        if not isshape(dim) or len(dim) != 2:
             return None
 
         return np.tile(array, dim)
