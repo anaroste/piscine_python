@@ -128,32 +128,15 @@ class ColorFilter:
         elif filter in ['w', 'weight']:
             for elt in array:
                 for rgb in elt:
-                    rgb[0] = sum([sum([rgb[0], kwargs['r'][0]]),
-                                  sum([rgb[1], kwargs['r'][1]]),
-                                  sum([rgb[2], kwargs['r'][2]])]) / 3
-                    rgb[1] = sum([sum([rgb[0], kwargs['r'][0]]),
-                                  sum([rgb[1], kwargs['r'][1]]),
-                                  sum([rgb[2], kwargs['r'][2]])]) / 3
-                    rgb[2] = sum([sum([rgb[0], kwargs['r'][0]]),
-                                  sum([rgb[1], kwargs['r'][1]]), 
-                                  sum([rgb[2], kwargs['r'][2]])]) / 3
+                    rgb[0] = sum([sum([rgb[0], kwargs['weights'][0]]),
+                                  sum([rgb[1], kwargs['weights'][1]]),
+                                  sum([rgb[2], kwargs['weights'][2]])]) / 3
+                    rgb[1] = sum([sum([rgb[0], kwargs['weights'][0]]),
+                                  sum([rgb[1], kwargs['weights'][1]]),
+                                  sum([rgb[2], kwargs['weights'][2]])]) / 3
+                    rgb[2] = sum([sum([rgb[0], kwargs['weights'][0]]),
+                                  sum([rgb[1], kwargs['weights'][1]]), 
+                                  sum([rgb[2], kwargs['weights'][2]])]) / 3
         else:
             return None
         return array
-
-
-
-
-from ImageProcessor import ImageProcessor
-imp = ImageProcessor()
-arr = imp.load("elon_canaGAN.png")
-cf = ColorFilter()
-# print(arr)
-# arr2 = cf.to_celluloid(arr)
-# arr2 = cf.to_grayscale(arr, 'm')
-arr2 = cf.to_grayscale(arr, 'weight', r=[0.2, 0.3, 0.5])
-# print(arr)
-# print('--------------------')
-# print(arr2)
-# imp.display(arr)
-imp.display(arr2)
