@@ -22,9 +22,3 @@ class SpatioTemporalData:
                 ret.append(row['City'])
         return ret
 
-
-loader = FileLoader()
-data = loader.load("athlete_events.csv")
-st = SpatioTemporalData(data)
-print(st.where(2016))
-print(st.when('Athina'))

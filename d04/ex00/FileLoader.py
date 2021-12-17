@@ -27,7 +27,3 @@ class FileLoader:
             print(data.tail(nb))
         else:
             print(data.head(nb))
- 
-loader = FileLoader()
-data = loader.load("athlete_events.csv")
-loader.display(data, -5)

@@ -2,7 +2,7 @@ import pandas as pd
 from FileLoader import FileLoader
 
 
-def youngfellah(df, year):
+def youngestfellah(df, year):
     """
     Get the name of the youngest woman and man for the given year.
     Args:
@@ -17,8 +17,3 @@ def youngfellah(df, year):
     f = df_f['Age'].min()
     m = df_m['Age'].min()
     return {'f': f, 'm': m}
-
-
-loader = FileLoader()
-data = loader.load("athlete_events.csv")
-print(youngfellah(data, 1988))

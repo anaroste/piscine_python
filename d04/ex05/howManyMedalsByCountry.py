@@ -11,8 +11,3 @@ def howManyMedalsByCountry(df, country):
                 dico[row['Year']] = {'G': 0, 'S': 0, 'B': 0}
             dico[row['Year']][row['Medal'][0]] += 1
     return dico
-
-
-loader = FileLoader()
-data = loader.load("athlete_events.csv")
-print(howManyMedalsByCountry(data, None))
